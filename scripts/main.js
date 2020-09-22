@@ -201,13 +201,14 @@ window.onload = function() {
 
         if (newHypSplit.length > ohyp.length) {
           var cnt = newHypSplit.length - ohyp.length;
-          console.log(newHyp);
+          //console.log(newHyp);
           var lstn = "";
           for (var i = 0; i < cnt; i++) {
             if (newHypSplit[i] == "OTVET") {
-              for (var j = i; j < newHypSplit.length; j++) {
+              for (var j = i; j < cnt; j++) {
                 if (newHypSplit[j] == "IGRA" && lstn != "") {
                   console.log("Answer: " + lstn);
+                  ohyp = newHypSplit;
                   outputContainer.innerHTML = "Ответ: " + lstn;
                   lstn = "";
                   break;
@@ -217,7 +218,7 @@ window.onload = function() {
               }
             }
           }
-          ohyp = newHypSplit;
+
         }
 
 
