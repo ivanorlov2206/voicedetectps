@@ -136,6 +136,7 @@ function initRecognizer() {
                 ['-dict', 'keyphrase.dict']
               ]
             }, function() {
+              updateStatus("Loading finished!");
               startRecording();
             });
 
@@ -166,6 +167,14 @@ window.onload = function() {
   outputContainer = document.getElementById('output');
 
   updateStatus('Initializing web audio and speech recognizer, waiting for approval to access the microphone');
+
+  navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(function(stream) {
+        console.log('You let me use your mic!')
+      })
+      .catch(function(err) {
+        console.log('No mic for you!')
+      });
 
   callbackManager = new CallbackManager();
 
@@ -210,6 +219,9 @@ window.onload = function() {
                   console.log("Answer: " + lstn);
                   ohyp = newHypSplit;
                   outputContainer.innerHTML = "Ответ: " + lstn;
+                  setTimeout(function() {
+                    new Audio("/audio/answer_accepted.mp3").play();
+                  }, 500);
                   lstn = "";
                   break;
                 } else if (newHypSplit[j] != "OTVET" && newHypSplit[j] != "IGRA" && newHypSplit[j].trim() != "") {
